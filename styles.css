@@ -21,7 +21,7 @@
 /* YJ Dual Variable Font Face */
 @font-face {
   font-family: 'YJ Dual Variable';
-  src: url('/font/YJ_Dual_250527-VF_ttf.woff2') format('woff2');
+  src: url('./YJ_Dual_250527-VF_ttf.woff2') format('woff2');
   font-weight: 1 999; /* assuming it's a variable font */
   font-style: normal;
   font-display: swap;
