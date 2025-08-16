@@ -981,3 +981,5 @@
             
             updateAllCirclesPath3();
         }, 300);
+
+        console.log("✅ type-tester.js loaded from jsDelivr");
