@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YJ Font Case Study</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="yj-container">
+        <!-- Section 1: Character Set -->
+        <section class="yj-section1" data-target-yj-section1>
+            <h2 class="yj-section-title">Complete Character Set</h2>
+            
+            <div class="yj-weight-buttons">
+                <button class="yj-weight-btn" data-yj-weight="100">Thin</button>
+                <button class="yj-weight-btn" data-yj-weight="300">Light</button>
+                <button class="yj-weight-btn active" data-yj-weight="400">Regular</button>
+                <button class="yj-weight-btn" data-yj-weight="500">Medium</button>
+                <button class="yj-weight-btn" data-yj-weight="700">Bold</button>
+            </div>
+            
+            <div class="yj-character-grid yj-weight-400" data-yj-charset>
+                ABCDEFGHIJKLMNOPQRSTUVWXY
+                <div>ABCDEFGHIJKLMNOPQRSTUVWXY</div>
+            </div>
+        </section>
+
+        <!-- Section 2: Stylistic Alternates -->
+        <section class="yj-section2" data-target-yj-section2>
+            <h2 class="yj-section-title">Stylistic Alternates</h2>
+            
+            <div class="yj-toggles-container">
+                <div class="yj-toggle-group">
+                    <span class="yj-toggle" data-yj-alt="a" data-yj-target="line2"></span>
+                    <label>
+                        Set 1: 
+                        <span class="yj-alt-char yj-alt-off" data-yj-alt-char="a" data-yj-alt-state="off">a</span>
+                        →
+                        <span class="yj-alt-char yj-alt-on" data-yj-alt-char="a" data-yj-alt-state="on">a</span>
+                    </label>
+                </div>
+                <div class="yj-toggle-group">
+                    <span class="yj-toggle" data-yj-alt="g" data-yj-target="line3"></span>
+                    <label>
+                        Set 2: 
+                        <span class="yj-alt-char yj-alt-off" data-yj-alt-char="g" data-yj-alt-state="off">g</span>
+                        →
+                        <span class="yj-alt-char yj-alt-on" data-yj-alt-char="g" data-yj-alt-state="on">g</span>
+                    </label>
+                </div>
+                <div class="yj-toggle-group">
+                    <span class="yj-toggle" data-yj-alt="i" data-yj-target="line1"></span>
+                    <label>
+                        Set 3: 
+                        <span class="yj-alt-char yj-alt-off" data-yj-alt-char="i" data-yj-alt-state="off">I</span>
+                        →
+                        <span class="yj-alt-char yj-alt-on" data-yj-alt-char="i" data-yj-alt-state="on">I</span>
+                    </label>
+                </div>
+                <div class="yj-toggle-group">
+                    <span class="yj-toggle" data-yj-alt="yj-smile" data-yj-target="line4"></span>
+                    <label>
+                        Set 4: <!-- :) YJ → ☺ YJ -->
+                        <span class="yj-alt-char yj-alt-off" data-yj-alt-char="yj-smile" data-yj-alt-state="off">:) YJ</span>
+                        →
+                        <span class="yj-alt-char yj-alt-on" data-yj-alt-char="yj-smile" data-yj-alt-state="on">☺ YJ</span>
+                    </label>
+                </div>
+                <div class="yj-toggle-group">
+                    <span class="yj-toggle" data-yj-alt="case" data-yj-target="line5"></span>
+                    <label>
+                        Case: <!-- (H) → (H) -->
+                        <span class="yj-alt-char yj-alt-off" data-yj-alt-char="case" data-yj-alt-state="off">(H)</span>
+                        →
+                        <span class="yj-alt-char yj-alt-on" data-yj-alt-char="case" data-yj-alt-state="on">(H)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="yj-text-lines">
+                <div class="yj-text-line" data-yj-line="line2" contenteditable="true" data-target-yj-section2-line2>
+                    SEGA Dreamcast</div>
+                <div class="yj-text-line" data-yj-line="line3" contenteditable="true" data-target-yj-section2-line3>
+                    Gaming Console</div>
+                <div class="yj-text-line" data-yj-line="line1" contenteditable="true" data-target-yj-section2-line1>
+                    SONIC L'HÉRISSON</div>
+                <div class="yj-text-line" data-yj-line="line4" contenteditable="true" data-target-yj-section2-line4>
+                    YJ Be :) Free YJ</div>
+                <div class="yj-text-line" data-yj-line="line5" contenteditable="true" data-target-yj-section2-line5>
+                    (NEC:GRAPHIC46)</div>
+            </div>
+        </section>
+
+        <!-- Section 3: Weight Sliders & Type-on-Path -->
+        <section class="yj-section3" data-target-yj-section3>
+            <h2 class="yj-section-title">Weight Sliders & Type on Path</h2>
+            
+            <div class="yj-path-containers">
+                <!-- Path Item 1: Combined SVG + Circular Text -->
+                <div class="yj-path-item" data-yj-path="path1" data-target-yj-section3-path1>
+                    <div class="yj-weight-slider-container yj-weight-slider-container-typeonpath">
+                        <div class="yj-slider-label" data-yj-weight-label>Regular</div>
+                        <input type="range" class="yj-weight-slider yj-weight-slider-typeonpath" 
+                               min="100" max="700" value="400" step="100"
+                               data-yj-path-slider="path1"
+                               list="yj-weight-steps">
+                    </div>
+                    <div class="debug-controls hidden">
+                        <div class="debug-controls-header">
+                            <h3>Debug Controls</h3>
+                            <button class="close-btn" id="closeDebugControls">×</button>
+                        </div>
+                        
+                        <div class="section-header">First Text String (Normal)</div>
+                        <div class="control-group">
+                            <label for="textInput1">Text String:</label>
+                            <input type="text" id="textInput1" value="* ADD THE WEIGHT *">
+                        </div>
+                        <div class="control-group">
+                            <label for="radiusSlider1">Circle Radius:</label>
+                            <input type="range" id="radiusSlider1" min="80" max="200" value="120">
+                            <div class="value-display">Radius: <span id="radiusValue1">120</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <div class="value-display">Circumference: <span id="circumferenceValue1">753.98</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="showStroke1">Show Circle Line:</label>
+                            <input type="checkbox" id="showStroke1">
+                        </div>
+                        <div class="control-group">
+                            <label for="startAngle1">Start Angle (°):</label>
+                            <input type="range" id="startAngle1" min="0" max="360" value="270">
+                            <div class="value-display">Start: <span id="startAngleValue1">270</span>°</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="endAngle1">End Angle (°):</label>
+                            <input type="range" id="endAngle1" min="0" max="360" value="100">
+                            <div class="value-display">End: <span id="endAngleValue1">100</span>°</div>
+                        </div>
+                        
+                        <div class="section-header">Second Text String (Reversed & Flipped)</div>
+                        <div class="control-group">
+                            <label for="textInput2">Text String:</label>
+                            <input type="text" id="textInput2" value="KEEP THE WIDTH">
+                        </div>
+                        <div class="control-group">
+                            <label for="radiusSlider2">Circle Radius:</label>
+                            <input type="range" id="radiusSlider2" min="80" max="200" value="128">
+                            <div class="value-display">Radius: <span id="radiusValue2">128</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <div class="value-display">Circumference: <span id="circumferenceValue2">804.25</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="showStroke2">Show Circle Line:</label>
+                            <input type="checkbox" id="showStroke2">
+                        </div>
+                        <div class="control-group">
+                            <label for="startAngle2">Start Angle (°):</label>
+                            <input type="range" id="startAngle2" min="0" max="360" value="105">
+                            <div class="value-display">Start: <span id="startAngleValue2">105</span>°</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="endAngle2">End Angle (°):</label>
+                            <input type="range" id="endAngle2" min="0" max="360" value="262">
+                            <div class="value-display">End: <span id="endAngleValue2">262</span>°</div>
+                        </div>
+                    </div>
+                
+                    <div class="container">        
+                        <svg class="circular-text" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" id="circularSvg">
+                            <g id="circleGroup1"></g>
+                            <g id="circleGroup2"></g>
+                            <g transform="translate(95, 80) scale(0.8)">
+                                <path class="yj-animated-path" 
+                                      d="M93.44,60.43c6.31-14.84,25.34-7.75,19.41,6.63-5.93,14.38-19.71,44.75-21.42,48.71-7.43,16.21-23.84,8.15-16.8-8.8,7.04-16.95,18.81-46.54,18.81-46.54Z"
+                                      fill="none" 
+                                      stroke="#0009f9" 
+                                      stroke-miterlimit="10" 
+                                      stroke-width="2.25"
+                                      data-yj-svg-stroke="path1"/>
+                                <path class="yj-animated-path" 
+                                      d="M107.42,80.26c5.89-12.82,21.09-8.69,20.62,2.13-.15,1.77-.55,3.27-1.27,4.86-6.29,14.32-13.89,28.86-15.70,32.51-7.85,15.99-24.54,6.99-17.09-9.75,7.45-16.73,13.45-29.75,13.45-29.75Z"
+                                      fill="none" 
+                                      stroke="#0009f9" 
+                                      stroke-miterlimit="10" 
+                                      stroke-width="2.25"
+                                      data-yj-svg-stroke="path1"/>
+                                <path class="yj-animated-path" 
+                                      d="M93.44,60.43c3.87-10.99,9.08-27.73,13.20-38.46,7.31-19.44-10.77-25.1-17.29-8.14-1.56,3.92-15.18,42.67-20.29,57.49-3.63-15.24-12.78-55.3-13.87-59.44-4.55-17.71-23.23-14.07-18.11,6.05,4.55,17.71,11.68,53.4,11.68,53.4,1.89,7.86,2.67,16.05,2.05,24.16-1.55,28.7-31.63,28.26-29.96-1.17l.4-7.7c1.02-18.04-19.38-22.3-20.48-3.38-3.24,58.64,22.66,84.8,62.95,87.11,53.46,3.09,72.75-50.93,64.32-88.91"
+                                      fill="none" 
+                                      stroke="#0009f9" 
+                                      stroke-miterlimit="10" 
+                                      stroke-width="2.25"
+                                      data-yj-svg-stroke="path1"/>
+                            </g>
+                        </svg>
+                    
+                        <div style="text-align: center;">
+                            <a href="#" class="debug-link" id="mainDebugToggle">Show Debug</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path Item 2: Three Concentric Circles -->
+                <div class="yj-path-item" data-yj-path="path2" data-target-yj-section3-path2>
+                    <div class="yj-weight-slider-container yj-weight-slider-container-typeonpath">
+                        <div class="yj-slider-label" data-yj-weight-label>Regular</div>
+                        <input type="range" class="yj-weight-slider yj-weight-slider-typeonpath" 
+                               min="100" max="700" value="400" step="100"
+                               data-yj-path-slider="path2"
+                               list="yj-weight-steps">
+                    </div>
+
+
+                    
+                    <div class="debug-controls hidden" id="debugControlsPath2">
+                         <div class="debug-controls-header">
+                             <h3>🛠️ Debug Controls</h3>
+                             <button class="close-btn" id="closeDebugControlsPath2">×</button>
+                         </div>
+                         
+                         <div class="section-header">Large Circle (130px radius - uppercase)</div>
+                         <div class="control-group">
+                             <label for="textInput1Path2">Text String:</label>
+                             <input type="text" id="textInput1Path2" value="ABCDEFGHIJKLMNOPQRSTUVWXY&Z">
+                         </div>
+                         <div class="control-group">
+                             <label for="radiusSlider1Path2">Circle Radius:</label>
+                             <input type="range" id="radiusSlider1Path2" min="80" max="200" value="130">
+                             <div class="value-display">Radius: <span id="radiusValue1Path2">130</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <div class="value-display">Circumference: <span id="circumferenceValue1Path2">816.81</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <label for="showStroke1Path2">Show Circle Line:</label>
+                             <input type="checkbox" id="showStroke1Path2">
+                         </div>
+                         
+                         <div class="section-header">Small Circle (90px radius - lowercase)</div>
+                         <div class="control-group">
+                             <label for="textInput2Path2">Text String:</label>
+                             <input type="text" id="textInput2Path2" value="abcdefghijklmnopqrstuvwxyz">
+                         </div>
+                         <div class="control-group">
+                             <label for="radiusSlider2Path2">Circle Radius:</label>
+                             <input type="range" id="radiusSlider2Path2" min="80" max="250" value="90">
+                             <div class="value-display">Radius: <span id="radiusValue2Path2">90</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <div class="value-display">Circumference: <span id="circumferenceValue2Path2">565.49</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <label for="showStroke2Path2">Show Circle Line:</label>
+                             <input type="checkbox" id="showStroke2Path2">
+                         </div>
+                         
+                         <div class="section-header">Tiny Circle (50px radius - symbols)</div>
+                         <div class="control-group">
+                             <label for="textInput3Path2">Text String:</label>
+                             <input type="text" id="textInput3Path2" value="0123456789$½!?%">
+                         </div>
+                         <div class="control-group">
+                             <label for="radiusSlider3Path2">Circle Radius:</label>
+                             <input type="range" id="radiusSlider3Path2" min="30" max="150" value="50">
+                             <div class="value-display">Radius: <span id="radiusValue3Path2">50</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <div class="value-display">Circumference: <span id="circumferenceValue3Path2">314.16</span>px</div>
+                         </div>
+                         <div class="control-group">
+                             <label for="showStroke3Path2">Show Circle Line:</label>
+                             <input type="checkbox" id="showStroke3Path2">
+                         </div>
+                     </div>
+                        <div class="container">        
+                         <svg class="circular-text" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" id="circularSvgPath2">
+                             <g id="circleGroup1Path2"></g>
+                             <g id="circleGroup2Path2"></g>
+                             <g id="circleGroup3Path2"></g>
+                         </svg>
+                     
+                         <div style="text-align: center;">
+                             <a href="#" class="debug-link" id="debugTogglePath2">Show Debug</a>
+                         </div>
+                        </div>
+                </div>
+
+                <!-- Path Item 3: Combined SVG + Circular Text (duplicate of Path 1) -->
+                <div class="yj-path-item" data-yj-path="path3" data-target-yj-section3-path3>
+                    <div class="yj-weight-slider-container yj-weight-slider-container-typeonpath">
+                        <div class="yj-slider-label" data-yj-weight-label>Bold</div>
+                        <input type="range" class="yj-weight-slider yj-weight-slider-typeonpath" 
+                               min="100" max="700" value="700" step="100"
+                               data-yj-path-slider="path3"
+                               list="yj-weight-steps">
+                    </div>
+                    <div class="debug-controls hidden" id="debugControlsPath3">
+                        <div class="debug-controls-header">
+                            <h3>Debug Controls</h3>
+                            <button class="close-btn" id="closeDebugControlsPath3">×</button>
+                        </div>
+                        
+                        <div class="section-header">Center Text (4 Lines)</div>
+                        <div class="control-group">
+                            <label for="centerTextInput1Path3">Line 1:</label>
+                            <input type="text" id="centerTextInput1Path3" value="***">
+                        </div>
+                        <div class="control-group">
+                            <label for="centerTextInput2Path3">Line 2:</label>
+                            <input type="text" id="centerTextInput2Path3" value="MAKE IT HEAVY">
+                        </div>
+                        <div class="control-group">
+                            <label for="centerTextInput3Path3">Line 3:</label>
+                            <input type="text" id="centerTextInput3Path3" value="KEEP IT LIGHT">
+                        </div>
+                        <div class="control-group">
+                            <label for="centerTextInput4Path3">Line 4:</label>
+                            <input type="text" id="centerTextInput4Path3" value="***">
+                        </div>
+                        
+                        <div class="section-header">First Text String (Normal)</div>
+                        <div class="control-group">
+                            <label for="textInput1Path3">Text String:</label>
+                            <input type="text" id="textInput1Path3" value="SET IT RIGHT">
+                        </div>
+                        <div class="control-group">
+                            <label for="radiusSlider1Path3">Circle Radius:</label>
+                            <input type="range" id="radiusSlider1Path3" min="80" max="200" value="120">
+                            <div class="value-display">Radius: <span id="radiusValue1Path3">120</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <div class="value-display">Circumference: <span id="circumferenceValue1Path3">753.98</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="showStroke1Path3">Show Circle Line:</label>
+                            <input type="checkbox" id="showStroke1Path3">
+                        </div>
+                        <div class="control-group">
+                            <label for="startAngle1Path3">Start Angle (°):</label>
+                            <input type="range" id="startAngle1Path3" min="0" max="360" value="300">
+                            <div class="value-display">Start: <span id="startAngleValue1Path3">300</span>°</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="endAngle1Path3">End Angle (°):</label>
+                            <input type="range" id="endAngle1Path3" min="0" max="360" value="70">
+                            <div class="value-display">End: <span id="endAngleValue1Path3">70</span>°</div>
+                        </div>
+                        
+                        <div class="section-header">Second Text String (Reversed & Flipped)</div>
+                        <div class="control-group">
+                            <label for="textInput2Path3">Text String:</label>
+                            <input type="text" id="textInput2Path3" value="DAY & NIGHT">
+                        </div>
+                        <div class="control-group">
+                            <label for="radiusSlider2Path3">Circle Radius:</label>
+                            <input type="range" id="radiusSlider2Path3" min="80" max="200" value="128">
+                            <div class="value-display">Radius: <span id="radiusValue2Path3">128</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <div class="value-display">Circumference: <span id="circumferenceValue2Path3">804.25</span>px</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="showStroke2Path3">Show Circle Line:</label>
+                            <input type="checkbox" id="showStroke2Path3">
+                        </div>
+                        <div class="control-group">
+                            <label for="startAngle2Path3">Start Angle (°):</label>
+                            <input type="range" id="startAngle2Path3" min="0" max="360" value="120">
+                            <div class="value-display">Start: <span id="startAngleValue2Path3">120</span>°</div>
+                        </div>
+                        <div class="control-group">
+                            <label for="endAngle2Path3">End Angle (°):</label>
+                            <input type="range" id="endAngle2Path3" min="0" max="360" value="250">
+                            <div class="value-display">End: <span id="endAngleValue2Path3">250</span>°</div>
+                        </div>
+                    </div>
+                
+                    <div class="container">        
+                        <svg class="circular-text" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" id="circularSvgPath3">
+                            <g id="circleGroup1Path3"></g>
+                            <g id="circleGroup2Path3"></g>
+                            <!-- Centered Typography (4 Lines) -->
+                            <text x="240" y="190" 
+                                  font-size="32" 
+                                  font-family="YJ Dual Variable, Courier New, monospace" 
+                                  fill="#0009F9" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="middle"
+                                  data-yj-path-text="path3" 
+                                  class="yj-path-text yj-weight-700" 
+                                  font-weight="700" 
+                                  font-variation-settings="'wght' 700"
+                                  id="centerText1Path3">***</text>
+                            <text x="240" y="230" 
+                                  font-size="32" 
+                                  font-family="YJ Dual Variable, Courier New, monospace" 
+                                  fill="#0009F9" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="middle"
+                                  data-yj-path-text="path3" 
+                                  class="yj-path-text yj-weight-700" 
+                                  font-weight="700" 
+                                  font-variation-settings="'wght' 700"
+                                  id="centerText2Path3">MAKE IT HEAVY</text>
+                            <text x="240" y="270" 
+                                  font-size="32" 
+                                  font-family="YJ Dual Variable, Courier New, monospace" 
+                                  fill="#0009F9" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="middle"
+                                  data-yj-path-text="path3" 
+                                  class="yj-path-text yj-weight-700" 
+                                  font-weight="700" 
+                                  font-variation-settings="'wght' 700"
+                                  id="centerText3Path3">KEEP IT LIGHT</text>
+                            <text x="240" y="310" 
+                                  font-size="32" 
+                                  font-family="YJ Dual Variable, Courier New, monospace" 
+                                  fill="#0009F9" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="middle"
+                                  data-yj-path-text="path3" 
+                                  class="yj-path-text yj-weight-700" 
+                                  font-weight="700" 
+                                  font-variation-settings="'wght' 700"
+                                  id="centerText4Path3">***</text>
+                        </svg>
+                    
+                        <div style="text-align: center;">
+                            <a href="#" class="debug-link" id="debugTogglePath3">Show Debug</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Type Testers -->
+        <section class="yj-section4" data-target-yj-section4>
+            <h2 class="yj-section-title">Interactive Type Testers</h2>
+            
+            <div class="yj-testers-grid">
+                <!-- Type Tester 1: Thin -->
+                <div class="yj-tester-item" data-yj-tester="tester1" data-target-yj-section4-tester1>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester1"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester1"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester1"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester1"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester1"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester1">Thin</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="100" step="100"
+                                   data-yj-tester-slider="tester1"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-100" 
+                         contenteditable="true" 
+                         data-yj-editable="tester1" 
+                         data-target-yj-section4-editable1>Sixth Generation</div>
+                </div>
+
+                <!-- Type Tester 2: Light -->
+                <div class="yj-tester-item" data-yj-tester="tester2" data-target-yj-section4-tester2>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester2"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester2"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester2"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester2"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester2"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester2">Light</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="300" step="200"
+                                   data-yj-tester-slider="tester2"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-300" 
+                         contenteditable="true" 
+                         data-yj-editable="tester2" 
+                         data-target-yj-section4-editable2>Trilinear Filtering</div>
+                </div>
+
+                <!-- Type Tester 3: Regular -->
+                <div class="yj-tester-item" data-yj-tester="tester3" data-target-yj-section4-tester3>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester3"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester3"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester3"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester3"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester3"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester3">Regular</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="400" step="200"
+                                   data-yj-tester-slider="tester3"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-400" 
+                         contenteditable="true" 
+                         data-yj-editable="tester3" 
+                         data-target-yj-section4-editable3>Hitachi SH46 CPU</div>
+                </div>
+
+                <!-- Type Tester 4: Medium -->
+                <div class="yj-tester-item" data-yj-tester="tester4" data-target-yj-section4-tester4>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester4"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester4"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester4"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester4"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester4"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester4">Medium</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="500" step="200"
+                                   data-yj-tester-slider="tester4"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-500" 
+                         contenteditable="true" 
+                         data-yj-editable="tester4" 
+                         data-target-yj-section4-editable4>Modular Modems</div>
+                </div>
+
+                <!-- Type Tester 5: Bold -->
+                <div class="yj-tester-item" data-yj-tester="tester5" data-target-yj-section4-tester5>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester5"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester5"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester5"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester5"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester5"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester5">Bold</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="700" step="200"
+                                   data-yj-tester-slider="tester5"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-700" 
+                         contenteditable="true" 
+                         data-yj-editable="tester5" 
+                         data-target-yj-section4-editable5>Synthesizer Chip</div>
+                </div>
+
+                <!-- Type Tester 6: Thin -->
+                <div class="yj-tester-item" data-yj-tester="tester6" data-target-yj-section4-tester6>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester6"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester6"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester6"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester6"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester6"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester6">Bold</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="100" step="200"
+                                   data-yj-tester-slider="tester6"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-weight-700" 
+                         contenteditable="true" 
+                         data-yj-editable="tester6" 
+                         data-target-yj-section4-editable6>9.13 million Units</div>
+                </div>
+
+                <!-- Type Tester 7: Light -->
+                <div class="yj-tester-item" data-yj-tester="tester7" data-target-yj-section4-tester7>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester7"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester7"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester7"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester7"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester7"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester7">Thin</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="300" step="200"
+                                   data-yj-tester-slider="tester7"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-type-tester-7 yj-weight-100" 
+                         contenteditable="true" 
+                         data-yj-editable="tester7" 
+                         data-target-yj-section4-editable7>Sonic Adventure (1998) is a platform game developed by Sonic Team and published by Sega for the Dreamcast. It was the first main Sonic the Hedgehog game to feature 3D gameplay. It follows Sonic the Hedgehog, Miles "Tails" Prower, Knuckles the Echidna, Amy Rose, Big the Cat, and E-102 Gamma in their quests to collect the Chaos Emeralds and stop Doctor Robotnik from unleashing Chaos, an ancient evil. Controlling... <!--one of the six characters—each with their own abilities—players complete levels to progress the story. Sonic Adventure retains many elements from prior Sonic games, such as power-ups and the ring-based health system. Players can play minigames such as racing and interact with Chao, a virtual pet.-->
+                        </div>
+                </div>
+
+                <!-- Type Tester 8: Regular -->
+                <div class="yj-tester-item" data-yj-tester="tester8" data-target-yj-section4-tester8>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester8"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester8"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester8"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester8"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester8"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester8">Regular</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="400" step="200"
+                                   data-yj-tester-slider="tester8"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-type-tester-8 yj-weight-400" 
+                         contenteditable="true" 
+                         data-yj-editable="tester8" 
+                         data-target-yj-section4-editable8>Sonic Adventure (1998) is a platform game developed by Sonic Team and published by Sega for the Dreamcast. It was the first main Sonic the Hedgehog game to feature 3D gameplay. It follows Sonic the Hedgehog, Miles "Tails" Prower, Knuckles the Echidna, Amy Rose, Big the Cat, and E-102 Gamma in their quests to collect the Chaos Emeralds and stop Doctor Robotnik from unleashing Chaos, an ancient evil. Controlling one of the six characters—each with their own abilities—players complete levels to progress the story. Sonic Adventure retains many elements from prior Sonic games, such as power-ups and the ring-based health system. Players can play minigames such as racing and interact with Chao, a virtual pet. 
+
+Sonic Team began developing Sonic Adventure in 1997, after the cancellation of the Sega Saturn game Sonic X-treme. Led by director Takashi Iizuka and producer Yuji Naka, the team strove to reinvent Sonic for the 3D era of video games. Adventure features a stronger emphasis on storytelling and role-playing elements in contrast to previous Sonic games, while Yuji Uekawa redesigned the series's characters for their transition to 3D. Sonic Team attempted to demonstrate the technical prowess of the Dreamcast with realistic graphics and drew inspiration from locations in Peru and Guatemala. The soundtrack was primarily composed by Jun Senoue, who preferred rock music over the electropop of previous Sonic games.
+
+Following its reveal at the Tokyo International Forum in August 1998, Sonic Adventure was highly anticipated and was released in Japan in December 1998, North America in September 1999, and Europe in October 1999. It received critical acclaim and became the Dreamcast's bestseller, with 2.5 million copies sold by August 2006. Reviewers considered Adventure a major technical advancement and praised the visuals and gameplay. Though critics noted glitches and camera problems, and reactions to the audio were mixed, they considered Sonic Adventure an exceptional game; some speculated that it could help re-establish Sega as the dominant console manufacturer after the unsuccessful Saturn.
+
+Journalists have retrospectively ranked Sonic Adventure among the best Sonic games, and it is recognized as an important release in both the series and the platform genre. Many characters and concepts introduced in Adventure recur in later Sonic games. Sonic Adventure 2 was released in 2001. Adventure was ported to the GameCube and Windows in 2003 with modernized graphical choices, more challenges and additional content, while a high-definition version was released for the Xbox 360 and PlayStation 3 in 2010 and for Windows in 2011. Reviews for these releases were less positive; critics felt the game had not aged well and ran at an inconsistent frame rate.
+</div>
+                </div>
+
+                <!-- Type Tester 9: Bold -->
+                <div class="yj-tester-item" data-yj-tester="tester9" data-target-yj-section4-tester9>
+                    <div class="yj-tester-controls">
+                        <div class="yj-tester-toggles">
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="i" data-yj-tester-target="tester9"></span>
+                                <label>I</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="a" data-yj-tester-target="tester9"></span>
+                                <label>a</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="g" data-yj-tester-target="tester9"></span>
+                                <label>g</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="yj-smile" data-yj-tester-target="tester9"></span>
+                                <label>YJ</label>
+                            </div>
+                            <div class="yj-toggle-group">
+                                <span class="yj-toggle" data-yj-tester-alt="case" data-yj-tester-target="tester9"></span>
+                                <label>Case</label>
+                            </div>
+                        </div>
+                        <div class="yj-weight-slider-container">
+                            <div class="yj-slider-label" data-yj-tester-weight-label="tester9">Regular</div>
+                            <input type="range" class="yj-weight-slider" 
+                                   min="100" max="700" value="700" step="200"
+                                   data-yj-tester-slider="tester9"
+                                   list="yj-weight-steps">
+                        </div>
+                    </div>
+                    <div class="yj-type-tester yj-type-tester-9 yj-weight-400" 
+                         contenteditable="true" 
+                         data-yj-editable="tester9" 
+                         data-target-yj-section4-editable9>Sonic Adventure (1998) is a platform game developed by Sonic Team and published by Sega for the Dreamcast. It was the first main Sonic the Hedgehog game to feature 3D gameplay. It follows Sonic the Hedgehog, Miles "Tails" Prower, Knuckles the Echidna, Amy Rose, Big the Cat, and E-102 Gamma in their quests to collect the Chaos Emeralds and stop Doctor Robotnik from unleashing Chaos, an ancient evil. Controlling one of the six characters—each with their own abilities—players complete levels to progress the story. Sonic Adventure retains many elements from prior Sonic games, such as power-ups and the ring-based health system. Players can play minigames such as racing and interact with Chao, a virtual pet.
+
+Sonic Team began developing Sonic Adventure in 1997, after the cancellation of the Sega Saturn game Sonic X-treme. Led by director Takashi Iizuka and producer Yuji Naka, the team strove to reinvent Sonic for the 3D era of video games. Adventure features a stronger emphasis on storytelling and role-playing elements in contrast to previous Sonic games, while Yuji Uekawa redesigned the series's characters for their transition to 3D. Sonic Team attempted to demonstrate the technical prowess of the Dreamcast with realistic graphics and drew inspiration from locations in Peru and Guatemala. The soundtrack was primarily composed by Jun Senoue, who preferred rock music over the electropop of previous Sonic games.
+
+Following its reveal at the Tokyo International Forum in August 1998, Sonic Adventure was highly anticipated and was released in Japan in December 1998, North America in September 1999, and Europe in October 1999. It received critical acclaim and became the Dreamcast's bestseller, with 2.5 million copies sold by August 2006. Reviewers considered Adventure a major technical advancement and praised the visuals and gameplay. Though critics noted glitches and camera problems, and reactions to the audio were mixed, they considered Sonic Adventure an exceptional game; some speculated that it could help re-establish Sega as the dominant console manufacturer after the unsuccessful Saturn.
+                         
+Journalists have retrospectively ranked Sonic Adventure among the best Sonic games, and it is recognized as an important release in both the series and the platform genre. Many characters and concepts introduced in Adventure recur in later Sonic games. Sonic Adventure 2 was released in 2001. Adventure was ported to the GameCube and Windows in 2003 with modernized graphical choices, more challenges and additional content, while a high-definition version was released for the Xbox 360 and PlayStation 3 in 2010 and for Windows in 2011. Reviews for these releases were less positive; critics felt the game had not aged well and ran at an inconsistent frame rate.
+
+Sonic Adventure is a 3D platform game with action and role-playing elements. Players control one of six anthropomorphic protagonists as they venture to defeat Doctor Robotnik and his robot army, who seeks the seven Chaos Emeralds and the entity Chaos. Six player characters are unlocked as the game progresses, each with their own story and attributes. Sonic the Hedgehog performs a spin dash, homing attack, and light-speed dash; Miles "Tails" Prower flies, swims, and attacks robots using his tails; Knuckles the Echidna glides, climbs walls, and punches; Amy Rose can defeat enemies using her hammer; Big the Cat is slow and carries a fishing rod he can cast; and E-102 Gamma can shoot laser beams.
+                         
+At the start of the game, the player is placed in one of three Adventure Fields, open-ended hub worlds inhabited by advice-giving NPCs. The player is guided and instructed by the voice of Tikal the Echidna. Through exploration, the player discovers entrances to levels called Action Stages, some of which must be opened using keys hidden in the Adventure Field. Once the player accesses an Action Stage, they are tasked with a specific objective, which is different for each character. Sonic must reach the level's end similarly to prior Sonic the Hedgehog games; Tails must reach the end before Sonic; Knuckles must find three hidden shards of the Master Emerald; Amy must solve puzzles and avoid being caught by a robot; Big must fish for his pet frog; and Gamma must fight his way through stages using projectiles as a defense.
+
+Some levels include minigames separate from the main story. These feature different styles of gameplay, among them rail shooting, racing, pinball, and sandboarding. Some minigames can only be accessed with particular characters. Fulfilling certain objectives allows the player to obtain bonus items. Unlocked minigames and stages the player has completed can be accessed from a Trial Mode on the title screen.
+                         
+As with previous Sonic installments, players can collect golden rings, which can grant them protection from a single enemy or hazard as well as an extra life if 100 are collected. Also scattered throughout the levels are canisters containing power-ups, such as speed shoes, additional rings, temporary invincibility, and protective shields, and 1-ups. In several stages, the player engages Robotnik or Chaos in a boss fight and must deplete the boss's health meter to proceed. Point markers act as checkpoints where the character can respawn after losing a life.
+                         
+Players may also discover Chao Gardens, hidden, protective environments inhabited by Chao, a virtual pet. Players can hatch, name, and interact with multiple Chao, and they can raise the status of their Chao by giving them small animals, which can be collected by defeating enemies within the Action Stages. The Dreamcast's handheld Visual Memory Unit (VMU) allows the player to download the minigame Chao Adventure, in which their Chao walks through a course to evolve and improve its skills. Evolving one's Chao improves its performance in competitions called Chao Races. Eggs that can produce special types of Chao are hidden throughout the Adventure Fields. Players can earn emblems by playing through Action Stages, searching through the Adventure Fields, or winning Chao Races. Each Action Stage has three emblems that can be earned by replaying the stages and fulfilling objectives, such as beating the level within a time limit.
+                        
+                        </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Weight steps datalist for path sliders only -->
+    <datalist id="yj-weight-steps">
+        <option value="100" label="Thin">100</option>
+        <option value="300" label="Light">300</option>
+        <option value="400" label="Regular">400</option>
+        <option value="500" label="Medium">500</option>
+        <option value="700" label="Bold">700</option>
+    </datalist>
+
+    <script src="type-tester.js"></script>
+</body>
+</html>
