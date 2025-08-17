@@ -586,8 +586,8 @@
         document.getElementById('mainDebugToggle').addEventListener('click', function(e) {
             e.preventDefault();
             const debugControls = document.querySelector('.debug-controls');
-            debugControls.classList.toggle('hidden');
-            const linkText = debugControls.classList.contains('hidden') ? 'Show Debug' : 'Hide Debug';
+            debugControls.classList.toggle('debug-hidden');
+            const linkText = debugControls.classList.contains('debug-hidden') ? 'Show Debug' : 'Hide Debug';
             this.textContent = linkText;
         });
 
@@ -595,7 +595,7 @@
         document.getElementById('closeDebugControls').addEventListener('click', function(e) {
             e.preventDefault();
             const debugControls = document.querySelector('.debug-controls');
-            debugControls.classList.add('hidden');
+            debugControls.classList.add('debug-hidden');
             document.getElementById('mainDebugToggle').textContent = 'Show Debug';
         });
 
@@ -739,8 +739,8 @@
             if (debugToggle && debugControls) {
                 debugToggle.addEventListener('click', function(e) {
                     e.preventDefault();
-                    debugControls.classList.toggle('hidden');
-                    const linkText = debugControls.classList.contains('hidden') ? 'Show Debug' : 'Hide Debug';
+                    debugControls.classList.toggle('debug-hidden');
+                    const linkText = debugControls.classList.contains('debug-hidden') ? 'Show Debug' : 'Hide Debug';
                     this.textContent = linkText;
                 });
             }
@@ -748,7 +748,7 @@
             if (closeBtn && debugControls && debugToggle) {
                 closeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    debugControls.classList.add('hidden');
+                    debugControls.classList.add('debug-hidden');
                     debugToggle.textContent = 'Show Debug';
                 });
             }
@@ -965,8 +965,8 @@
             if (debugTogglePath3 && debugControlsPath3) {
                 debugTogglePath3.addEventListener('click', function(e) {
                     e.preventDefault();
-                    debugControlsPath3.classList.toggle('hidden');
-                    const linkText = debugControlsPath3.classList.contains('hidden') ? 'Show Debug' : 'Hide Debug';
+                    debugControlsPath3.classList.toggle('debug-hidden');
+                    const linkText = debugControlsPath3.classList.contains('debug-hidden') ? 'Show Debug' : 'Hide Debug';
                     this.textContent = linkText;
                 });
             }
@@ -974,7 +974,7 @@
             if (closeDebugControlsPath3 && debugControlsPath3 && debugTogglePath3) {
                 closeDebugControlsPath3.addEventListener('click', function(e) {
                     e.preventDefault();
-                    debugControlsPath3.classList.add('hidden');
+                    debugControlsPath3.classList.add('debug-hidden');
                     debugTogglePath3.textContent = 'Show Debug';
                 });
             }
