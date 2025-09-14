@@ -983,3 +983,14 @@
         }, 300);
 
         console.log("✅ type-tester.js loaded from jsDelivr");
+// Add this to see what's going on
+setTimeout(() => {
+    document.querySelectorAll('[data-yj-tester-slider]').forEach(slider => {
+        console.log(`Slider ${slider.dataset.yjTesterSlider}:`, {
+            min: slider.min,
+            max: slider.max, 
+            value: slider.value,
+            step: slider.step
+        });
+    });
+}, 2000);
