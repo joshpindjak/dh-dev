@@ -100,7 +100,7 @@
             }
 
             // Initialize type tester sliders to show correct state
-
+            // JP
             initializeTypeTestersState() {
                 const testerSliders = document.querySelectorAll('[data-yj-tester-slider]');
                 testerSliders.forEach(slider => {
