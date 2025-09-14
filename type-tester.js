@@ -100,12 +100,13 @@
             }
 
             // Initialize type tester sliders to show correct state
+
             initializeTypeTestersState() {
                 const testerSliders = document.querySelectorAll('[data-yj-tester-slider]');
                 testerSliders.forEach(slider => {
                     const testerId = slider.dataset.yjTesterSlider;
                     
-                    // Find the associated tester element to read its initial weight class
+                    // Find the associated tester element to read its weight class
                     const tester = document.querySelector(`[data-yj-editable="${testerId}"]`);
                     let initialWeight = 400; // default
                     
@@ -116,6 +117,7 @@
                             initialWeight = parseInt(weightClass.replace('yj-weight-', ''), 10);
                         }
                     }
+                    
                     // Convert weight to slider position (0-4)
                     const weightToPosition = {
                         100: 0, // Thin
@@ -126,6 +128,8 @@
                     };
                     
                     const sliderPosition = weightToPosition[initialWeight] || 2;
+                    
+                    // Set the slider value correctly
                     slider.value = sliderPosition;
                     
                     // Update the label to show correct weight name
@@ -134,13 +138,14 @@
                         label.textContent = yjGetWeightName(initialWeight);
                     }
                     
-                    // Ensure the tester has the correct weight class (should already be set in HTML, but just in case)
+                    // Ensure the tester has the correct weight class (should already be set in HTML)
                     if (tester) {
                         tester.classList.remove('yj-weight-100', 'yj-weight-300', 'yj-weight-400', 'yj-weight-500', 'yj-weight-700');
                         tester.classList.add(`yj-weight-${initialWeight}`);
                     }
                 });
             }
+
             // Ensure all weight sliders work consistently
             ensureSliderConsistency() {
                 // Fix path sliders (Section 3)
@@ -983,71 +988,3 @@
         }, 300);
 
         console.log("✅ type-tester.js loaded from jsDelivr");
-
-
-// Add this script AFTER your type-tester.js loads
-// This will force the correct slider positions
-
-function fixTypeTestersSliders() {
-    console.log('🔧 Fixing type tester sliders...');
-    
-    const testerSliders = document.querySelectorAll('[data-yj-tester-slider]');
-    testerSliders.forEach(slider => {
-        const testerId = slider.dataset.yjTesterSlider;
-        
-        // Find the associated tester element
-        const tester = document.querySelector(`[data-yj-editable="${testerId}"]`);
-        
-        if (tester) {
-            // Extract weight from class name (e.g., 'yj-weight-300' -> 300)
-            const weightClass = Array.from(tester.classList).find(cls => cls.startsWith('yj-weight-'));
-            
-            if (weightClass) {
-                const actualWeight = parseInt(weightClass.replace('yj-weight-', ''), 10);
-                
-                // Convert weight to slider position (0-4)
-                const weightToPosition = {
-                    100: 0, // Thin
-                    300: 1, // Light
-                    400: 2, // Regular
-                    500: 3, // Medium
-                    700: 4  // Bold
-                };
-                
-                const correctPosition = weightToPosition[actualWeight];
-                
-                if (correctPosition !== undefined) {
-                    // Force set the correct position
-                    slider.value = correctPosition;
-                    slider.setAttribute('value', correctPosition);
-                    
-                    // Update the label
-                    const label = document.querySelector(`[data-yj-tester-weight-label="${testerId}"]`);
-                    if (label) {
-                        const weightNames = {
-                            100: 'Thin',
-                            300: 'Light',
-                            400: 'Regular',
-                            500: 'Medium',
-                            700: 'Bold'
-                        };
-                        label.textContent = weightNames[actualWeight];
-                    }
-                    
-                    console.log(`✅ Fixed ${testerId}: weight=${actualWeight}, position=${correctPosition}`);
-                }
-            }
-        }
-    });
-}
-
-// Run the fix after everything loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait for the main script to finish, then fix
-    setTimeout(fixTypeTestersSliders, 1000);
-});
-
-// Also run it when the window loads (backup)
-window.addEventListener('load', () => {
-    setTimeout(fixTypeTestersSliders, 500);
-});
