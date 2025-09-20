@@ -97,6 +97,7 @@
                 this.setupSection4TypeTesters();
                 this.ensureSliderConsistency(); // Ensure all sliders work properly
                 this.initializeTypeTestersState(); // Set initial state for type testers
+                this.initializePathSlidersState(); // Set initial state for path sliders
             }
 
             // Initialize type tester sliders to show correct state
@@ -155,16 +156,87 @@
                 });
             }
 
-            // Ensure all weight sliders work consistently
-            ensureSliderConsistency() {
-                // Fix path sliders (Section 3)
+            // Initialize path sliders to show correct initial state
+            initializePathSlidersState() {
                 const pathSliders = document.querySelectorAll('[data-yj-path-slider]');
                 pathSliders.forEach(slider => {
-                    slider.setAttribute('min', '100');
-                    slider.setAttribute('max', '700');
-                    slider.setAttribute('step', '100');
-                    if (!slider.value || slider.value === '') {
-                        slider.value = '400';
+                    const pathId = slider.dataset.yjPathSlider;
+                    
+                    // Get the slider's current value (from HTML)
+                    let sliderValue = parseInt(slider.value, 10);
+                    
+                    // For path sliders that use position-based system (0-4), convert to weight
+                    let weight;
+                    if (slider.min === '0' && slider.max === '4') {
+                        // Position-based slider (like path1)
+                        weight = yjMapSliderToWeight(sliderValue);
+                    } else {
+                        // Weight-based slider (like path2, path3)
+                        weight = sliderValue;
+                    }
+                    
+                    // Update SVG stroke width for path-based SVGs
+                    const svgPaths = document.querySelectorAll(`[data-yj-svg-stroke="${pathId}"]`);
+                    if (svgPaths.length > 0) {
+                        const strokeWidth = this.calculateStrokeWidth(weight);
+                        svgPaths.forEach(path => {
+                            path.style.strokeWidth = strokeWidth;
+                        });
+                    }
+                    
+                    // Update text elements
+                    const pathTexts = document.querySelectorAll(`[data-yj-path-text="${pathId}"]`);
+                    pathTexts.forEach(pathText => {
+                        if (pathText.tagName === 'text') {
+                            pathText.setAttribute('font-weight', weight);
+                            pathText.setAttribute('font-variation-settings', `'wght' ${weight}`);
+                        } else {
+                            pathText.classList.remove('yj-weight-100', 'yj-weight-300', 'yj-weight-400', 'yj-weight-500', 'yj-weight-700');
+                            pathText.classList.add(`yj-weight-${weight}`);
+                        }
+                    });
+                    
+                    // Update label
+                    const label = slider.parentElement.querySelector('[data-yj-weight-label]');
+                    if (label) {
+                        label.textContent = yjGetWeightName(weight);
+                    }
+                });
+                
+                // After initializing all path sliders, update circular text for path1 and path3
+                setTimeout(() => {
+                    if (typeof updateAllCircles === 'function') {
+                        updateAllCircles();
+                    }
+                    if (typeof updateAllCirclesPath3 === 'function') {
+                        updateAllCirclesPath3();
+                    }
+                }, 10);
+            }
+
+            // Ensure all weight sliders work consistently
+            ensureSliderConsistency() {
+                // Fix path sliders (Section 3) - respect existing HTML setup
+                const pathSliders = document.querySelectorAll('[data-yj-path-slider]');
+                pathSliders.forEach(slider => {
+                    const pathId = slider.dataset.yjPathSlider;
+                    
+                    // path1 uses position-based system (0-4), others use weight-based (100-700)
+                    if (pathId === 'path1') {
+                        slider.setAttribute('min', '0');
+                        slider.setAttribute('max', '4');
+                        slider.setAttribute('step', '1');
+                        if (!slider.value || slider.value === '') {
+                            slider.value = '0'; // Default to Thin
+                        }
+                    } else {
+                        // path2, path3, etc. use weight-based system
+                        slider.setAttribute('min', '100');
+                        slider.setAttribute('max', '700');
+                        slider.setAttribute('step', '100');
+                        if (!slider.value || slider.value === '') {
+                            slider.value = '400';
+                        }
                     }
                 });
 
@@ -289,13 +361,21 @@
 
                 sliders.forEach(slider => {
                     slider.addEventListener('input', (e) => {
-                        const rawWeight = parseInt(e.target.value);
-                        const weight = this.snapToNearestWeight(rawWeight);
-                        
-                        // Update slider to exact weight
-                        e.target.value = weight;
-                        
                         const pathId = slider.dataset.yjPathSlider;
+                        let weight;
+                        
+                        // Handle different slider types
+                        if (pathId === 'path1') {
+                            // Position-based slider (0-4)
+                            const sliderPosition = parseInt(e.target.value, 10);
+                            weight = yjMapSliderToWeight(sliderPosition);
+                        } else {
+                            // Weight-based slider (100-700)
+                            const rawWeight = parseInt(e.target.value);
+                            weight = this.snapToNearestWeight(rawWeight);
+                            // Update slider to exact weight
+                            e.target.value = weight;
+                        }
                         
                         // Update text weight (handle multiple text elements with same path ID)
                         const pathTexts = document.querySelectorAll(`[data-yj-path-text="${pathId}"]`);
@@ -510,9 +590,13 @@
                     `rotate(${rotate + 180},${x},${y})` : 
                     `rotate(${rotate},${x},${y})`;
                 
-                // Get current weight from the path1 slider
+                // Get current weight from the path1 slider (convert position to weight)
                 const currentSlider = document.querySelector('[data-yj-path-slider="path1"]');
-                const currentWeight = currentSlider ? currentSlider.value : 400;
+                let currentWeight = 400; // default
+                if (currentSlider) {
+                    const sliderPosition = parseInt(currentSlider.value, 10);
+                    currentWeight = yjMapSliderToWeight(sliderPosition);
+                }
                 
                 group.innerHTML += `<text x="${x}" y="${y}" font-size="${fontSize}" font-family='YJ Dual Variable, Courier New, monospace' fill="${color}" text-anchor="middle" dominant-baseline="middle" transform="${transform}" data-yj-path-text="path1" class="yj-path-text yj-weight-${currentWeight}" font-weight="${currentWeight}" font-variation-settings="'wght' ${currentWeight}">${char}</text>`;
             }
