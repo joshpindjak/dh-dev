@@ -119,18 +119,27 @@
                     }
                     
                     // Convert weight to slider position (0-4)
-                    const weightToPosition = {
-                        100: 0, // Thin
-                        300: 1, // Light
-                        400: 2, // Regular
-                        500: 3, // Medium
-                        700: 4  // Bold
-                    };
+                    let sliderPosition;
+                    if (initialWeight === 100) {
+                        sliderPosition = 0; // Thin
+                    } else if (initialWeight === 300) {
+                        sliderPosition = 1; // Light
+                    } else if (initialWeight === 400) {
+                        sliderPosition = 2; // Regular
+                    } else if (initialWeight === 500) {
+                        sliderPosition = 3; // Medium
+                    } else if (initialWeight === 700) {
+                        sliderPosition = 4; // Bold
+                    } else {
+                        sliderPosition = 2; // Default to Regular
+                    }
                     
-                    const sliderPosition = weightToPosition[initialWeight] || 2;
-                    
-                    // Set the slider value correctly
+                    // Set the slider value correctly using both methods
                     slider.value = sliderPosition;
+                    slider.setAttribute('value', sliderPosition);
+                    
+                    // Force a repaint by requesting the current value
+                    void slider.offsetWidth;
                     
                     // Update the label to show correct weight name
                     const label = document.querySelector(`[data-yj-tester-weight-label="${testerId}"]`);
@@ -408,7 +417,10 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            new YJFontController();
+            // Add small delay to ensure full rendering
+            setTimeout(() => {
+                new YJFontController();
+            }, 50);
         });
 
         // Add performance optimization
@@ -440,8 +452,11 @@
 
     // New Script added for 3 concentric circles
         function getMaxRadius() {
-            const radius1 = parseInt(document.getElementById('radiusSlider1').value);
-            const radius2 = parseInt(document.getElementById('radiusSlider2').value);
+            const slider1 = document.getElementById('radiusSlider1');
+            const slider2 = document.getElementById('radiusSlider2');
+            if (!slider1 || !slider2) return 100; // default fallback
+            const radius1 = parseInt(slider1.value);
+            const radius2 = parseInt(slider2.value);
             return Math.max(radius1, radius2);
         }
 
@@ -506,56 +521,82 @@
         }
 
         function updateAllCircles() {
+            const svg = document.getElementById('circularSvg');
+            if (!svg) return; // Exit if SVG doesn't exist
+            
             const maxRadius = getMaxRadius();
             const viewBoxSize = (maxRadius * 2) + 40;
             const centerX = viewBoxSize / 2;
             const centerY = viewBoxSize / 2;
-            const svg = document.getElementById('circularSvg');
             svg.setAttribute('viewBox', `0 0 ${viewBoxSize} ${viewBoxSize}`);
             svg.style.width = viewBoxSize + 'px';
             svg.style.height = viewBoxSize + 'px';
             
-            // First circle (normal)
-            const startAngle1 = parseInt(document.getElementById('startAngle1').value);
-            const endAngle1 = parseInt(document.getElementById('endAngle1').value);
-            document.getElementById('startAngleValue1').textContent = startAngle1;
-            document.getElementById('endAngleValue1').textContent = endAngle1;
-            updateCircleGroup(
-                'circleGroup1',
-                document.getElementById('textInput1').value,
-                parseInt(document.getElementById('radiusSlider1').value),
-                '#0009F9',
-                20,
-                'radiusValue1',
-                'circumferenceValue1',
-                centerX,
-                centerY,
-                document.getElementById('showStroke1').checked,
-                startAngle1,
-                endAngle1,
-                false // not reversed
-            );
+            // First circle (normal) - check if elements exist
+            const startAngle1Element = document.getElementById('startAngle1');
+            const endAngle1Element = document.getElementById('endAngle1');
+            const startAngleValue1Element = document.getElementById('startAngleValue1');
+            const endAngleValue1Element = document.getElementById('endAngleValue1');
+            
+            if (!startAngle1Element || !endAngle1Element) return; // Exit if required elements don't exist
+            
+            const startAngle1 = parseInt(startAngle1Element.value);
+            const endAngle1 = parseInt(endAngle1Element.value);
+            if (startAngleValue1Element) startAngleValue1Element.textContent = startAngle1;
+            if (endAngleValue1Element) endAngleValue1Element.textContent = endAngle1;
+            const textInput1 = document.getElementById('textInput1');
+            const radiusSlider1 = document.getElementById('radiusSlider1');
+            const showStroke1 = document.getElementById('showStroke1');
+            
+            if (textInput1 && radiusSlider1 && showStroke1) {
+                updateCircleGroup(
+                    'circleGroup1',
+                    textInput1.value,
+                    parseInt(radiusSlider1.value),
+                    '#0009F9',
+                    20,
+                    'radiusValue1',
+                    'circumferenceValue1',
+                    centerX,
+                    centerY,
+                    showStroke1.checked,
+                    startAngle1,
+                    endAngle1,
+                    false // not reversed
+                );
+            }
             
             // Second circle (reversed and flipped) - independent radius
-            const startAngle2 = parseInt(document.getElementById('startAngle2').value);
-            const endAngle2 = parseInt(document.getElementById('endAngle2').value);
-            document.getElementById('startAngleValue2').textContent = startAngle2;
-            document.getElementById('endAngleValue2').textContent = endAngle2;
-            updateCircleGroup(
-                'circleGroup2',
-                document.getElementById('textInput2').value,
-                parseInt(document.getElementById('radiusSlider2').value), // INDEPENDENT radius
-                '#0009F9', // Second (bottom) text string text color
-                20,
-                'radiusValue2', // radius display for second circle
-                'circumferenceValue2', // circumference display for second circle
-                centerX, // SAME center as first circle
-                centerY, // SAME center as first circle
-                document.getElementById('showStroke2').checked, // show stroke for second circle
-                startAngle2,
-                endAngle2,
-                true // reversed
-            );
+            const startAngle2Element = document.getElementById('startAngle2');
+            const endAngle2Element = document.getElementById('endAngle2');
+            const startAngleValue2Element = document.getElementById('startAngleValue2');
+            const endAngleValue2Element = document.getElementById('endAngleValue2');
+            const textInput2 = document.getElementById('textInput2');
+            const radiusSlider2 = document.getElementById('radiusSlider2');
+            const showStroke2 = document.getElementById('showStroke2');
+            
+            if (startAngle2Element && endAngle2Element && textInput2 && radiusSlider2 && showStroke2) {
+                const startAngle2 = parseInt(startAngle2Element.value);
+                const endAngle2 = parseInt(endAngle2Element.value);
+                if (startAngleValue2Element) startAngleValue2Element.textContent = startAngle2;
+                if (endAngleValue2Element) endAngleValue2Element.textContent = endAngle2;
+                
+                updateCircleGroup(
+                    'circleGroup2',
+                    textInput2.value,
+                    parseInt(radiusSlider2.value), // INDEPENDENT radius
+                    '#0009F9', // Second (bottom) text string text color
+                    20,
+                    'radiusValue2', // radius display for second circle
+                    'circumferenceValue2', // circumference display for second circle
+                    centerX, // SAME center as first circle
+                    centerY, // SAME center as first circle
+                    showStroke2.checked, // show stroke for second circle
+                    startAngle2,
+                    endAngle2,
+                    true // reversed
+                );
+            }
         }
 
         // Initialize after a short delay to ensure DOM is ready
@@ -587,22 +628,35 @@
             updateAllCircles();
         }, 100);
 
-        // Handle main debug toggle
-        document.getElementById('mainDebugToggle').addEventListener('click', function(e) {
-            e.preventDefault();
-            const debugControls = document.querySelector('.debug-controls');
-            debugControls.classList.toggle('debug-hidden');
-            const linkText = debugControls.classList.contains('debug-hidden') ? 'Show Debug' : 'Hide Debug';
-            this.textContent = linkText;
-        });
+        // Handle main debug toggle (if it exists)
+        const mainDebugToggle = document.getElementById('mainDebugToggle');
+        if (mainDebugToggle) {
+            mainDebugToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const debugControls = document.querySelector('.debug-controls');
+                if (debugControls) {
+                    debugControls.classList.toggle('debug-hidden');
+                    const linkText = debugControls.classList.contains('debug-hidden') ? 'Show Debug' : 'Hide Debug';
+                    this.textContent = linkText;
+                }
+            });
+        }
 
-        // Handle close button
-        document.getElementById('closeDebugControls').addEventListener('click', function(e) {
-            e.preventDefault();
-            const debugControls = document.querySelector('.debug-controls');
-            debugControls.classList.add('debug-hidden');
-            document.getElementById('mainDebugToggle').textContent = 'Show Debug';
-        });
+        // Handle close button (if it exists)
+        const closeDebugControls = document.getElementById('closeDebugControls');
+        if (closeDebugControls) {
+            closeDebugControls.addEventListener('click', function(e) {
+                e.preventDefault();
+                const debugControls = document.querySelector('.debug-controls');
+                const mainDebugToggle = document.getElementById('mainDebugToggle');
+                if (debugControls) {
+                    debugControls.classList.add('debug-hidden');
+                }
+                if (mainDebugToggle) {
+                    mainDebugToggle.textContent = 'Show Debug';
+                }
+            });
+        }
 
         
         // Path2 Three Concentric Circles Functions (completely separate from path1)
