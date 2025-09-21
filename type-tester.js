@@ -95,9 +95,11 @@
                 await this.loadExternalSVG(); // Load external SVG if needed
                 this.setupSection3PathSliders();
                 this.setupSection4TypeTesters();
+                this.setupLanguageSelectors(); // Setup language switching for testers 9, 10, 11
                 this.ensureSliderConsistency(); // Ensure all sliders work properly
                 this.initializeTypeTestersState(); // Set initial state for type testers
                 this.initializePathSlidersState(); // Set initial state for path sliders
+                this.initializeTester3AltA(); // Initialize tester3 Alt a as active
             }
 
             // Initialize type tester sliders to show correct state
@@ -212,6 +214,15 @@
                         updateAllCirclesPath3();
                     }
                 }, 10);
+            }
+
+            // Initialize tester3 Alt a as active on page load
+            initializeTester3AltA() {
+                const tester3Element = document.querySelector('[data-yj-editable="tester3"]');
+                if (tester3Element) {
+                    // Apply the Alt a alternate (ss02) to tester3
+                    yjUpdateElementAlternates(tester3Element, 'a', true);
+                }
             }
 
             // Ensure all weight sliders work consistently
@@ -462,6 +473,78 @@
                 });
             }
 
+            // Setup language selectors for testers 9, 10, 11
+            setupLanguageSelectors() {
+                // Load language data from the JSON script tag
+                const languageDataElement = document.getElementById('yj-language-data');
+                if (!languageDataElement) {
+                    console.warn('Language data not found');
+                    return;
+                }
+
+                let languageData;
+                try {
+                    languageData = JSON.parse(languageDataElement.textContent);
+                } catch (error) {
+                    console.error('Failed to parse language data:', error);
+                    return;
+                }
+
+                // Setup language selectors for testers 9, 10, 11
+                const languageSelectors = document.querySelectorAll('[data-yj-language-selector]');
+                languageSelectors.forEach(selector => {
+                    const testerId = selector.dataset.yjLanguageSelector;
+                    
+                    // Only handle testers 9, 10, 11
+                    if (!['tester9', 'tester10', 'tester11'].includes(testerId)) {
+                        return;
+                    }
+
+                    selector.addEventListener('change', (e) => {
+                        const selectedLanguage = e.target.value;
+                        const testerElement = document.querySelector(`[data-yj-editable="${testerId}"]`);
+                        
+                        if (testerElement && languageData[testerId] && languageData[testerId][selectedLanguage]) {
+                            // Get the text content for the selected language
+                            let newText = languageData[testerId][selectedLanguage];
+                            
+                            // Convert \\n to actual line breaks
+                            newText = newText.replace(/\\n/g, '\n');
+                            
+                            // Preserve the current cursor position if possible
+                            const selection = window.getSelection();
+                            const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+                            const cursorOffset = range && range.startContainer.parentNode === testerElement ? 
+                                range.startOffset : 0;
+                            
+                            // Update the text content
+                            testerElement.textContent = newText;
+                            
+                            // Try to restore cursor position (simplified approach)
+                            if (cursorOffset > 0 && cursorOffset <= newText.length) {
+                                try {
+                                    const newRange = document.createRange();
+                                    const textNode = testerElement.childNodes[0];
+                                    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+                                        newRange.setStart(textNode, Math.min(cursorOffset, textNode.textContent.length));
+                                        newRange.collapse(true);
+                                        selection.removeAllRanges();
+                                        selection.addRange(newRange);
+                                    }
+                                } catch (error) {
+                                    // Cursor positioning failed, but text update succeeded
+                                    console.log('Could not restore cursor position');
+                                }
+                            }
+                            
+                            // Ensure the element maintains its styling and functionality
+                            // The weight classes and alternates should already be applied via CSS
+                            // and the existing toggle/slider functionality should continue to work
+                        }
+                    });
+                });
+            }
+
             // Utility functions
             snapToNearestWeight(value) {
                 const availableWeights = [100, 300, 400, 500, 700];
@@ -483,15 +566,20 @@
             }
 
             calculateStrokeWidth(weight) {
-                // Map font weight to SVG stroke width for YJ Dual Variable with decimal precision
-                const weightMap = {
-                    100: 0.8,      // Thin
-                    300: 1.542,    // Light  
-                    400: 2.25,     // Regular
-                    500: 3.125,    // Medium
-                    700: 4.75      // Bold
+                // Get custom SVG weights from debug controls if they exist, otherwise use defaults
+                const getCustomWeight = (elementId, defaultValue) => {
+                    const element = document.getElementById(elementId);
+                    return element ? parseFloat(element.value) : defaultValue;
                 };
-                return weightMap[weight] || 2.25;
+
+                const weightMap = {
+                    100: getCustomWeight('svgWeightThin', 0.8),      // Thin
+                    300: getCustomWeight('svgWeightLight', 1.542),   // Light  
+                    400: getCustomWeight('svgWeightRegular', 2.25),  // Regular
+                    500: getCustomWeight('svgWeightMedium', 3.125),  // Medium
+                    700: getCustomWeight('svgWeightBold', 4.75)      // Bold
+                };
+                return weightMap[weight] || getCustomWeight('svgWeightRegular', 2.25);
             }
         }
 
@@ -598,7 +686,7 @@
                     currentWeight = yjMapSliderToWeight(sliderPosition);
                 }
                 
-                group.innerHTML += `<text x="${x}" y="${y}" font-size="${fontSize}" font-family='YJ Dual Variable, Courier New, monospace' fill="${color}" text-anchor="middle" dominant-baseline="middle" transform="${transform}" data-yj-path-text="path1" class="yj-path-text yj-weight-${currentWeight}" font-weight="${currentWeight}" font-variation-settings="'wght' ${currentWeight}">${char}</text>`;
+                group.innerHTML += `<text x="${x}" y="${y}" font-size="${fontSize}" font-family='YJ Dual Variable, Courier New, monospace' fill="${color}" text-anchor="middle" dominant-baseline="middle" transform="${transform}" data-yj-path-text="path1" class="yj-path-text yj-weight-${currentWeight} yj-alt-i" font-weight="${currentWeight}" font-variation-settings="'wght' ${currentWeight}">${char}</text>`;
             }
             if (radiusValueId) document.getElementById(radiusValueId).textContent = radius;
             if (circumferenceValueId) document.getElementById(circumferenceValueId).textContent = (2 * Math.PI * radius).toFixed(2);
@@ -697,6 +785,13 @@
             const startAngle2 = document.getElementById('startAngle2');
             const endAngle2 = document.getElementById('endAngle2');
             
+            // SVG weight input fields
+            const svgWeightThin = document.getElementById('svgWeightThin');
+            const svgWeightLight = document.getElementById('svgWeightLight');
+            const svgWeightRegular = document.getElementById('svgWeightRegular');
+            const svgWeightMedium = document.getElementById('svgWeightMedium');
+            const svgWeightBold = document.getElementById('svgWeightBold');
+            
             if (textInput1) textInput1.addEventListener('input', updateAllCircles);
             if (radiusSlider1) radiusSlider1.addEventListener('input', updateAllCircles);
             if (showStroke1) showStroke1.addEventListener('change', updateAllCircles);
@@ -708,6 +803,32 @@
             if (showStroke2) showStroke2.addEventListener('change', updateAllCircles);
             if (startAngle2) startAngle2.addEventListener('input', updateAllCircles);
             if (endAngle2) endAngle2.addEventListener('input', updateAllCircles);
+            
+            // Add event listeners for SVG weight inputs to update stroke width immediately
+            const updateSVGStroke = () => {
+                // Get current weight from path1 slider
+                const currentSlider = document.querySelector('[data-yj-path-slider="path1"]');
+                if (currentSlider) {
+                    const sliderPosition = parseInt(currentSlider.value, 10);
+                    const weight = yjMapSliderToWeight(sliderPosition);
+                    
+                    // Create a temporary YJFontController instance to access calculateStrokeWidth
+                    const tempController = new YJFontController();
+                    const strokeWidth = tempController.calculateStrokeWidth(weight);
+                    
+                    // Update all SVG paths with path1 data attribute
+                    const svgPaths = document.querySelectorAll('[data-yj-svg-stroke="path1"]');
+                    svgPaths.forEach(path => {
+                        path.style.strokeWidth = strokeWidth;
+                    });
+                }
+            };
+            
+            if (svgWeightThin) svgWeightThin.addEventListener('input', updateSVGStroke);
+            if (svgWeightLight) svgWeightLight.addEventListener('input', updateSVGStroke);
+            if (svgWeightRegular) svgWeightRegular.addEventListener('input', updateSVGStroke);
+            if (svgWeightMedium) svgWeightMedium.addEventListener('input', updateSVGStroke);
+            if (svgWeightBold) svgWeightBold.addEventListener('input', updateSVGStroke);
             
             updateAllCircles();
         }, 100);
@@ -989,7 +1110,7 @@
             const currentWeight = currentSlider ? currentSlider.value : 700;
             
             // Define line spacing and starting position for 4 lines
-            const lineHeight = 40; // pixels between lines
+            const lineHeight = 42; // pixels between lines
             const totalHeight = lineHeight * 3; // 3 gaps between 4 lines
             const startY = centerY - (totalHeight / 2); // start position to center the block
             
@@ -1000,7 +1121,9 @@
                 
                 if (centerText) {
                     const centerTextContent = centerTextInput ? centerTextInput.value : '';
-                    const yPosition = startY + ((i - 1) * lineHeight);
+                    // Add extra spacing for the 4th line only
+                    const extraSpacing = (i === 4) ? 10 : 0;
+                    const yPosition = startY + ((i - 1) * lineHeight) + extraSpacing;
                     
                     // Update center text position to match the dynamic center
                     centerText.setAttribute('x', centerX);
@@ -1125,4 +1248,110 @@
             updateAllCirclesPath3();
         }, 300);
 
-        console.log("✅ type-tester.js loaded from jsDelivr");
+        // Drag functionality for debug controls
+        function makeDraggable(element) {
+            if (!element) return;
+            
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+            
+            // Get initial position from CSS
+            const rect = element.getBoundingClientRect();
+            xOffset = rect.left;
+            yOffset = rect.top;
+            
+            function dragStart(e) {
+                // Only start drag if clicking on the header or the main debug controls area (not inputs)
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON') {
+                    return;
+                }
+                
+                if (e.type === "touchstart") {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                
+                if (e.target === element || e.target.closest('.debug-controls-header')) {
+                    isDragging = true;
+                    element.style.transition = 'none'; // Disable transitions during drag
+                }
+            }
+            
+            function dragEnd(e) {
+                initialX = currentX;
+                initialY = currentY;
+                isDragging = false;
+                element.style.transition = ''; // Re-enable transitions
+            }
+            
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    if (e.type === "touchmove") {
+                        currentX = e.touches[0].clientX - initialX;
+                        currentY = e.touches[0].clientY - initialY;
+                    } else {
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+                    }
+                    
+                    xOffset = currentX;
+                    yOffset = currentY;
+                    
+                    // Constrain to viewport
+                    const maxX = window.innerWidth - element.offsetWidth;
+                    const maxY = window.innerHeight - element.offsetHeight;
+                    
+                    currentX = Math.max(0, Math.min(currentX, maxX));
+                    currentY = Math.max(0, Math.min(currentY, maxY));
+                    
+                    element.style.left = currentX + "px";
+                    element.style.top = currentY + "px";
+                    element.style.right = "auto"; // Override right positioning
+                }
+            }
+            
+            // Add event listeners
+            element.addEventListener("mousedown", dragStart);
+            element.addEventListener("touchstart", dragStart);
+            
+            document.addEventListener("mousemove", drag);
+            document.addEventListener("touchmove", drag);
+            
+            document.addEventListener("mouseup", dragEnd);
+            document.addEventListener("touchend", dragEnd);
+        }
+        
+        // Initialize drag functionality for all debug controls
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                // Make main debug controls draggable
+                const mainDebugControls = document.querySelector('.debug-controls');
+                if (mainDebugControls) {
+                    makeDraggable(mainDebugControls);
+                }
+                
+                // Make path2 debug controls draggable
+                const path2DebugControls = document.getElementById('debugControlsPath2');
+                if (path2DebugControls) {
+                    makeDraggable(path2DebugControls);
+                }
+                
+                // Make path3 debug controls draggable
+                const path3DebugControls = document.getElementById('debugControlsPath3');
+                if (path3DebugControls) {
+                    makeDraggable(path3DebugControls);
+                }
+            }, 150);
+        });
+
+        console.log("✅ type-tester.js loaded from jsDelivr - v5 - 21 September 2025");
