@@ -96,6 +96,7 @@
                 this.setupSection3PathSliders();
                 this.setupSection4TypeTesters();
                 this.setupLanguageSelectors(); // Setup language switching for testers 9, 10, 11
+                this.setupMobileControlsOverlay(); // Setup mobile controls overlay
                 this.ensureSliderConsistency(); // Ensure all sliders work properly
                 this.initializeTypeTestersState(); // Set initial state for type testers
                 this.initializePathSlidersState(); // Set initial state for path sliders
@@ -543,6 +544,87 @@
                         }
                     });
                 });
+            }
+
+            // Setup mobile controls overlay functionality
+            setupMobileControlsOverlay() {
+                this.globalOverlay = document.getElementById('yj-global-overlay');
+                this.overlayContent = document.getElementById('yj-overlay-content');
+                this.closeButton = document.getElementById('yj-close-global-overlay');
+                this.currentControls = null;
+                this.originalParent = null;
+
+                // Setup open controls buttons
+                const openButtons = document.querySelectorAll('[data-yj-open-controls]');
+                openButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const testerId = button.dataset.yjOpenControls;
+                        const controls = document.querySelector(`[data-yj-tester-controls="${testerId}"]`);
+                        
+                        if (controls && this.globalOverlay && this.overlayContent) {
+                            // Store reference to original parent
+                            this.originalParent = controls.parentNode;
+                            this.currentControls = controls;
+                            
+                            // Move controls to overlay
+                            this.overlayContent.appendChild(controls);
+                            
+                            // Force visibility in overlay
+                            controls.style.display = 'flex';
+                            controls.style.flexDirection = 'column';
+                            controls.style.gap = '1.5em';
+                            
+                            // Show overlay
+                            this.globalOverlay.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                });
+
+                // Setup close overlay button
+                if (this.closeButton && this.globalOverlay) {
+                    this.closeButton.addEventListener('click', () => {
+                        this.closeOverlay();
+                    });
+                }
+
+                // Close overlay when clicking outside of content
+                if (this.globalOverlay) {
+                    this.globalOverlay.addEventListener('click', (e) => {
+                        if (e.target === this.globalOverlay) {
+                            this.closeOverlay();
+                        }
+                    });
+                }
+
+                // Close overlay on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.globalOverlay && this.globalOverlay.classList.contains('active')) {
+                        this.closeOverlay();
+                    }
+                });
+            }
+
+            // Helper function to close overlay and restore controls
+            closeOverlay() {
+                if (this.globalOverlay && this.currentControls && this.originalParent) {
+                    // Reset any inline styles that were added for overlay visibility
+                    this.currentControls.style.display = '';
+                    this.currentControls.style.flexDirection = '';
+                    this.currentControls.style.gap = '';
+                    
+                    // Move controls back to original position
+                    this.originalParent.appendChild(this.currentControls);
+                    
+                    // Hide overlay
+                    this.globalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    
+                    
+                    // Clear references
+                    this.currentControls = null;
+                    this.originalParent = null;
+                }
             }
 
             // Utility functions
@@ -1354,4 +1436,4 @@
             }, 150);
         });
 
-        console.log("✅ type-tester.js loaded from jsDelivr - v5 - 21 September 2025");
+        console.log("✅ type-tester.js loaded from jsDelivr - v7 - 28 September 2025");
